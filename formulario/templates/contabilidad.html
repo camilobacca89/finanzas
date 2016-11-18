@@ -1,3 +1,14 @@
+<!--<!DOCTYPE html>
+<html>
+<head>
+	<title>Formulario de movimientos financieros</title>
+</head>
+<body>
+<h1> {% for contabilidad in contabilidad %}
+        {{ contabilidad.observacion }}
+    {% endfor %} </h1>
+</body>
+</html>-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -14,11 +25,11 @@
 <script src="js/jquery.sBubble-0.1.1.js"></script>
 <script src="jquery.ui.datepicker-es.js"></script>
 <link rel="stylesheet" href="css/jquery.sBubble-0.1.1.css" />
-<link rel="stylesheet" type="text/css" href="../nov12/estilos2.css"/>
+<link rel="stylesheet" type="text/css" href="estilos2.css"/>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-<script type="text/javascript" src="../nov12/funciones.js"></script>
+<script type="text/javascript" src="funciones.js"></script>
 <script type="text/javascript">
 function mostrarReferencia(){
 //Si la opcion con id Conocido_1 (dentro del documento > formulario con name fcontacto >     y a la vez dentro del array de Conocido) esta activada
@@ -97,19 +108,10 @@ document.getElementsByClassName('ui-datepicker-calendar').style.visibility="hidd
       <td nowrap="nowrap" align="right">Codigo:</td>
       <td><select name="codigo" id="codigo" onchange="selecOp() ">
         <option value="value">Seleccione Codigo</option>
-        <?php
-do {  
-?>
-        <option value="<?php echo $row_cole['codigo']?>"><?php echo $row_cole['codigo']?></option>
-        <?php
-} while ($row_cole = mysql_fetch_assoc($cole));
-  $rows = mysql_num_rows($cole);
-  if($rows > 0 ) {
-      mysql_data_seek($cole, 0);
-	  $row_cole = mysql_fetch_assoc($cole);
-  }
-?>
-      </select><img src="../nov12/ayuda.gif" alt="Ayuda" onmouseover="muestraAyuda(event, 'Fecha Calificacion')"></td>
+    {% for contabilidad in contabilidad %}
+        <option value=" {{ contabilidad.observacion }}"> {{ contabilidad.observacion }}</option>
+{% endfor %} 
+      </select><img src="ayuda.gif" alt="Ayuda" onmouseover="muestraAyuda(event, 'Fecha Calificacion')"></td>
     </tr>
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">Concepto:</td>
@@ -121,9 +123,7 @@ do {
     </tr>
        <tr valign="baseline">
       <td nowrap="nowrap" align="right">Fecha Movimiento:</td>
-      <td><input  type="text"  name="fecha" id="fecha" size="28" placeholder="mm/dd/aaaa" required  value="<?php 
-	  $date=date('Y-m-d');
-	  echo $date;  ?>" /><img src="../nov12/ayuda.gif" alt="Ayuda" onmouseover="muestraAyuda(event, 'Fecha Calificacion')"></td>
+      <td><input  type="text"  name="fecha" id="fecha" size="28" placeholder="mm/dd/aaaa" required  value="{{ contabilidad.fecha_movimiento  }}"/><img src="../nov12/ayuda.gif" alt="Ayuda" onmouseover="muestraAyuda(event, 'Fecha Calificacion')"></td>
     </tr>
      <tr valign="baseline">
       <td nowrap="nowrap" align="right">Entra:</td>
@@ -136,8 +136,8 @@ do {
    
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">Saldo General:</td>
-      <td><input type="text" name="saldo123" disabled="disabled" id="fecha_saldo" value="$<?php echo htmlentities($row_conteo1['saldo_conta'], ENT_COMPAT, 'utf-8'); ?>" size="28" />
-      <input type="text" name="saldo" hidden="" id="saldo" value="<?php echo htmlentities(round ($conteo,2), ENT_COMPAT, 'utf-8'); ?>" size="32" />
+      <td><input type="text" name="saldo123" disabled="disabled" id="fecha_saldo" value="${{ contabilidad.saldo_general }}" size="28" />
+      <input type="text" name="saldo" hidden="" id="saldo" value="{{ contabilidad.saldo_general }}" size="32" />
       <img src="../nov12/ayuda.gif" alt="Ayuda" onmouseover="muestraAyuda(event, 'Fecha_Calificacion')"></td>
     </tr>
     <tr valign="baseline">

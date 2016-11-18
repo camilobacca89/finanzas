@@ -1,10 +1,9 @@
 from django.shortcuts import render, render_to_response
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from formulario.models import *
 import time
 from calendar import month_name
-
+from formulario.models import *
 from django.forms import ModelForm
 from django.template.context_processors import csrf
 from django.http import HttpResponseRedirect
@@ -16,7 +15,7 @@ def main(request):
 	contabilidad= Contabilidad.objects.all().order_by("-fecha_movimiento")
 	paginator= Paginator(contabilidad,3)
 
-	try:pagina = int(request.POST.get("page","1"))
+	try:pagina = int(request.GET.get("page","1"))
 	except ValueError: pagina=1
 	
 	try:
